@@ -26,13 +26,14 @@ const monthNames = [
   "December",
 ];
 
-// gets birthday variables... 
-const selectedDOB = window.location.search;
+// gets birthday variables...
+const selectedDOB =
+  window.location.search || `${new Date().getFullYear()}-01-01`; // sets default to new year if no date is provided
 let dob = selectedDOB.split("-");
 dob.shift(); // removes year
 const dobDay = dob[1]; // gets last element which is the day number
-const dobMonth = monthNames[parseInt(dob[0]) - 1]; // gets the name of the month based on first element of dob which is the month int
-
+const dobMonth = monthNames[parseInt(dob[0]) - 1]; // gets the name of the month based on first element of dob which is the month number
+console.log(selectedDOB, dob);
 const birthday = new Date(`${dobMonth} ${dobDay} ${currentYear} 00:00:00`);
 
 let dayString;
@@ -73,7 +74,7 @@ backgroundYear.innerText =
 // checks if birthday is in the past and corrects year
 if (
   birthday.getMonth() <= currentDate.getMonth() &&
-  birthday.getDate() < currentDate.getDate()
+  birthday.getDate() <= currentDate.getDate()
 ) {
   birthday.setFullYear(currentYear + 1);
 }
